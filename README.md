@@ -9,6 +9,9 @@ Upload5 is a flexible HTML5/JavaScript library that handles multiple file upload
 * progress reporting
 * upload aborting
 
+##Requirements
+* requires Underscore.js library - [http://documentcloud.github.com/underscore/]
+
 ##TODO
 * drag&drop support
 
