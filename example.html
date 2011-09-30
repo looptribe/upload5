@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>Upload5 Demo by BitCandies</title>
+        <script src="bitcandies.upload5.js"></script>
+        <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.6.4/jquery.min.js"></script>
+
+        <style type="text/css">
+            #output li.enqueued
+            {
+                color: #666;
+            }
+            #output li.success
+            {
+                color: #3f3;
+            }
+            #output li.error
+            {
+                color: #f33;
+            }
+            .progress 
+            {
+                width: 100px;
+                height: 10px;
+                border: 1px solid #ccc;
+            }
+            .progress .bar 
+            {
+                width: 0;
+                height: 100%;
+                background-color: #00f;
+            }
+        </style>
+    </head>
+    <body>
+    
+        <form id="file_form">
+            <div>
+                <label for="file">Files:</label><input type="file" multiple="multiple" id="file" />
+                <input type="submit" value="Start upload" />
+            </div>
+        </form>
+        
+        <ul id="output">
+        </ul>
+    
+        <script type="text/javascript">
+            var $lis = {};
+            var uploader = new bitcandies.FileUploader({
+                url: 'uploads.php',
+
+                enqueued: function (item) {
+                    var $li = $('<li>').addClass('enqueued');
+                    $li.append($('<span>').text(item.getFilename()));
+                    $li.append($('<div>').addClass('progress').append($('<div>').addClass('bar')));
+                    $lis[item.id] = $li;
+                    $('#output').append($li);
+                },
+                start: function (item) {
+                    $lis[item.id].removeClass('enqueued').addClass('uploading');
+                },
+                progress: function (item, loaded, total) {
+                    $lis[item.id].find('.progress .bar').css('width', Math.round(loaded / total * 100) + '%');
+                },
+                success: function (item) {
+                    $lis[item.id].removeClass('uploading').addClass('success');
+                },
+                error: function (item) {
+                    $lis[item.id].removeClass('uploading').addClass('error');
+                }
+            });
+
+            document.getElementById('file_form').onsubmit = function () {
+                var files = document.getElementById('file').files;
+                for (var i = 0; i < files.length; ++i) {
+                    uploader.add(files[i]);
+                }
+                return false;
+            };
+        </script>
+    </body>
+</html>
