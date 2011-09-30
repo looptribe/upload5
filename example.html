@@ -6,25 +6,45 @@
         <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.6.4/jquery.min.js"></script>
 
         <style type="text/css">
-            #output li.enqueued
+            #output li .abort
             {
-                color: #666;
+                margin-left: 5px;
             }
-            #output li.success
+            #output li.enqueued .title
+            {
+                color: #33f;
+            }
+            #output li.uploading .title
+            {
+                font-weight: bold;
+            }
+            #output li.success .title
             {
                 color: #3f3;
             }
-            #output li.error
+            #output li.aborted .title
+            {
+                color: #666;
+            }
+            #output li.error .title
             {
                 color: #f33;
             }
-            .progress 
+            #output li.aborted .abort, #output li.success .abort, #output li.error .abort
+            {
+                display: none;
+            }
+            #output li.aborted .progress, #output li.success .progress, #output li.error .progress
+            {
+                display: none;
+            }
+            #output .progress 
             {
                 width: 100px;
                 height: 10px;
                 border: 1px solid #ccc;
             }
-            .progress .bar 
+            #output .progress .bar 
             {
                 width: 0;
                 height: 100%;
@@ -51,13 +71,17 @@
 
                 enqueued: function (item) {
                     var $li = $('<li>').addClass('enqueued');
-                    $li.append($('<span>').text(item.getFilename()));
+                    $li.append($('<span>').addClass('title').text(item.getFilename()));
+                    $li.append($('<span>').addClass('abort').append($('<a href="#">cancel</a>').click(function() { uploader.abort(item); })));
                     $li.append($('<div>').addClass('progress').append($('<div>').addClass('bar')));
                     $lis[item.id] = $li;
                     $('#output').append($li);
                 },
                 start: function (item) {
                     $lis[item.id].removeClass('enqueued').addClass('uploading');
+                },
+                aborted: function (item) {
+                    $lis[item.id].removeClass('enqueued uploading').addClass('aborted');
                 },
                 progress: function (item, loaded, total) {
                     $lis[item.id].find('.progress .bar').css('width', Math.round(loaded / total * 100) + '%');
