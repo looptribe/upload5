@@ -72,7 +72,7 @@
                 enqueued: function (item) {
                     var $li = $('<li>').addClass('enqueued');
                     $li.append($('<span>').addClass('title').text(item.getFilename()));
-                    $li.append($('<span>').addClass('abort').append($('<a href="#">cancel</a>').click(function() { uploader.abort(item); })));
+                    $li.append($('<span>').addClass('abort').append($('<a href="#">cancel</a>').click(function() { uploader.abort(item); return false;})));
                     $li.append($('<div>').addClass('progress').append($('<div>').addClass('bar')));
                     $lis[item.id] = $li;
                     $('#output').append($li);
