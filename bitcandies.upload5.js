@@ -19,7 +19,7 @@ bitcandies.defaults = function (dest, source) {
             dest[i] = source[i];
         }
     }
-};  
+};
 
 bitcandies.FileUploader = function (options) {
     var default_options = {

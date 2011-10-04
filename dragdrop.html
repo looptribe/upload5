@@ -50,16 +50,19 @@
                 height: 100%;
                 background-color: #00f;
             }
+            
+            #drop 
+            {
+                border: 3px dashed #ccc;
+                width: 300px;
+                height: 100px;
+            }
         </style>
     </head>
     <body>
     
-        <form id="file_form">
-            <div>
-                <label for="file">Files:</label><input type="file" multiple="multiple" id="file" />
-                <input type="submit" value="Start upload" />
-            </div>
-        </form>
+        <div id="drop">
+        </div>
         
         <ul id="output">
         </ul>
@@ -72,7 +75,7 @@
                 enqueued: function (item) {
                     var $li = $('<li>').addClass('enqueued');
                     $li.append($('<span>').addClass('title').text(item.getFilename()));
-                    $li.append($('<span>').addClass('abort').append($('<a href="#">cancel</a>').click(function() { uploader.abort(item); return false; })));
+                    $li.append($('<span>').addClass('abort').append($('<a href="#">cancel</a>').click(function() { uploader.abort(item); })));
                     $li.append($('<div>').addClass('progress').append($('<div>').addClass('bar')));
                     $lis[item.id] = $li;
                     $('#output').append($li);
@@ -94,13 +97,21 @@
                 }
             });
 
-            document.getElementById('file_form').onsubmit = function () {
-                var files = document.getElementById('file').files;
+            function handleDragOver(evt) {
+                evt.stopPropagation();
+                evt.preventDefault();
+            }
+            function handleDrop(evt) {
+                evt.stopPropagation();
+                evt.preventDefault();
+                var files = evt.dataTransfer.files;
                 for (var i = 0; i < files.length; ++i) {
                     uploader.add(files[i]);
                 }
-                return false;
-            };
+            }
+            var dropArea = document.getElementById('drop');
+            dropArea.addEventListener('dragover', handleDragOver, false);
+            dropArea.addEventListener('drop', handleDrop, false);
         </script>
     </body>
 </html>
