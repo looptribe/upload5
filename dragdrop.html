@@ -6,9 +6,17 @@
         <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.6.4/jquery.min.js"></script>
 
         <style type="text/css">
-            #output li .abort
+            #output
             {
-                margin-left: 5px;
+                background-color: #ccc;
+                width: 306px;
+                margin: 10px 0 0 0;
+                padding: 0;
+                list-style-type: square;
+            }
+            #output li
+            {
+                margin-left: 20px;
             }
             #output li.enqueued .title
             {
@@ -57,11 +65,28 @@
                 width: 300px;
                 height: 100px;
             }
+            #drop span {
+                font-family: Arial;
+                font-size: 15px;
+                display: block;
+                background-color: #CCC;
+                border-radius: 5px;
+                margin: 40px auto;
+                width: 150px;
+                height: 20px;
+                color: white;
+                font-weight: bold;
+                text-align: center;
+            }
         </style>
     </head>
     <body>
     
+        <h1>Upload5</h1>
+        <p>Drag'n'drop demo</p>
+    
         <div id="drop">
+            <span>Drop files here</span>
         </div>
         
         <ul id="output">
