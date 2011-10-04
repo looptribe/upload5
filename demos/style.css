@@ -16,7 +16,7 @@
 }
 #output li.enqueued .title
 {
-    color: #33f;
+    color: cornflowerblue;
     background: url(img/doc.png) left no-repeat;
 }
 #output li.uploading .title
@@ -26,18 +26,18 @@
 }
 #output li.success .title
 {
-    color: #3f3;
+    color: mediumseagreen;
     background: url(img/ok.png) left no-repeat;
     display: block;
 }
 #output li.aborted .title
 {
-    color: #666;
+    color: grey;
     background: url(img/fail.png) left no-repeat;
 }
 #output li.error .title
 {
-    color: #f33;
+    color: firebrick;
     background: url(img/fail.png) left no-repeat;
 }
 #output li.aborted .abort, #output li.success .abort, #output li.error .abort
