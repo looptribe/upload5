@@ -13,7 +13,6 @@
         <form id="file_form">
             <div>
                 <label for="file">Files:</label><input type="file" multiple="multiple" id="file" />
-                <input type="submit" value="Start upload" />
             </div>
         </form>
 
@@ -50,13 +49,13 @@
                 }
             });
 
-            document.getElementById('file_form').onsubmit = function () {
+            $('#file').change(function () {
                 var files = document.getElementById('file').files;
                 for (var i = 0; i < files.length; ++i) {
                     uploader.add(files[i]);
                 }
                 return false;
-            };
+            });
         </script>
     </body>
 </html>
