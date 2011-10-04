@@ -1,76 +1,29 @@
 <!DOCTYPE html>
 <html>
     <head>
-        <title>Upload5 by BitCandies</title>
-        <script src="bitcandies.upload5.js"></script>
+        <title>Upload5 Demo by BitCandies</title>
+        <script src="../bitcandies.upload5.js"></script>
         <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.6.4/jquery.min.js"></script>
-
-        <style type="text/css">
-            #output li .abort
-            {
-                margin-left: 5px;
-            }
-            #output li.enqueued .title
-            {
-                color: #33f;
-            }
-            #output li.uploading .title
-            {
-                font-weight: bold;
-            }
-            #output li.success .title
-            {
-                color: #3f3;
-            }
-            #output li.aborted .title
-            {
-                color: #666;
-            }
-            #output li.error .title
-            {
-                color: #f33;
-            }
-            #output li.aborted .abort, #output li.success .abort, #output li.error .abort
-            {
-                display: none;
-            }
-            #output li.aborted .progress, #output li.success .progress, #output li.error .progress
-            {
-                display: none;
-            }
-            #output .progress 
-            {
-                width: 100px;
-                height: 10px;
-                border: 1px solid #ccc;
-            }
-            #output .progress .bar 
-            {
-                width: 0;
-                height: 100%;
-                background-color: #00f;
-            }
-        </style>
+        <link rel="stylesheet" href="style.css" type="text/css" />
     </head>
     <body>
-    
+
         <h1>Upload5</h1>
-        <p>Demo</p>
-    
+
         <form id="file_form">
             <div>
                 <label for="file">Files:</label><input type="file" multiple="multiple" id="file" />
                 <input type="submit" value="Start upload" />
             </div>
         </form>
-        
+
         <ul id="output">
         </ul>
-    
+
         <script type="text/javascript">
             var $lis = {};
             var uploader = new bitcandies.FileUploader({
-                url: 'uploads.php',
+                url: '../uploads.php',
 
                 enqueued: function (item) {
                     var $li = $('<li>').addClass('enqueued');
