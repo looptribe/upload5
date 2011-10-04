@@ -10,25 +10,35 @@
 {
     margin-left: 20px;
 }
+#output li span
+{
+    padding-left: 16px;
+}
 #output li.enqueued .title
 {
     color: #33f;
+    background: url(img/doc.png) left no-repeat;
 }
 #output li.uploading .title
 {
     font-weight: bold;
+    background: url(img/up.png) left no-repeat;
 }
 #output li.success .title
 {
     color: #3f3;
+    background: url(img/ok.png) left no-repeat;
+    display: block;
 }
 #output li.aborted .title
 {
     color: #666;
+    background: url(img/fail.png) left no-repeat;
 }
 #output li.error .title
 {
     color: #f33;
+    background: url(img/fail.png) left no-repeat;
 }
 #output li.aborted .abort, #output li.success .abort, #output li.error .abort
 {
