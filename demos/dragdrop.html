@@ -1,0 +1,142 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>Upload5 Demo by BitCandies</title>
+        <script src="bitcandies.upload5.js"></script>
+        <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.6.4/jquery.min.js"></script>
+
+        <style type="text/css">
+            #output
+            {
+                background-color: #ccc;
+                width: 306px;
+                margin: 10px 0 0 0;
+                padding: 0;
+                list-style-type: square;
+            }
+            #output li
+            {
+                margin-left: 20px;
+            }
+            #output li.enqueued .title
+            {
+                color: #33f;
+            }
+            #output li.uploading .title
+            {
+                font-weight: bold;
+            }
+            #output li.success .title
+            {
+                color: #3f3;
+            }
+            #output li.aborted .title
+            {
+                color: #666;
+            }
+            #output li.error .title
+            {
+                color: #f33;
+            }
+            #output li.aborted .abort, #output li.success .abort, #output li.error .abort
+            {
+                display: none;
+            }
+            #output li.aborted .progress, #output li.success .progress, #output li.error .progress
+            {
+                display: none;
+            }
+            #output .progress 
+            {
+                width: 100px;
+                height: 10px;
+                border: 1px solid #ccc;
+            }
+            #output .progress .bar 
+            {
+                width: 0;
+                height: 100%;
+                background-color: #00f;
+            }
+            
+            #drop 
+            {
+                border: 3px dashed #ccc;
+                width: 300px;
+                height: 100px;
+            }
+            #drop span {
+                font-family: Arial;
+                font-size: 15px;
+                display: block;
+                background-color: #CCC;
+                border-radius: 5px;
+                margin: 40px auto;
+                width: 150px;
+                height: 20px;
+                color: white;
+                font-weight: bold;
+                text-align: center;
+            }
+        </style>
+    </head>
+    <body>
+    
+        <h1>Upload5</h1>
+        <p>Drag'n'drop demo</p>
+    
+        <div id="drop">
+            <span>Drop files here</span>
+        </div>
+        
+        <ul id="output">
+        </ul>
+    
+        <script type="text/javascript">
+            var $lis = {};
+            var uploader = new bitcandies.FileUploader({
+                url: 'uploads.php',
+
+                enqueued: function (item) {
+                    var $li = $('<li>').addClass('enqueued');
+                    $li.append($('<span>').addClass('title').text(item.getFilename()));
+                    $li.append($('<span>').addClass('abort').append($('<a href="#">cancel</a>').click(function() { uploader.abort(item); })));
+                    $li.append($('<div>').addClass('progress').append($('<div>').addClass('bar')));
+                    $lis[item.id] = $li;
+                    $('#output').append($li);
+                },
+                start: function (item) {
+                    $lis[item.id].removeClass('enqueued').addClass('uploading');
+                },
+                aborted: function (item) {
+                    $lis[item.id].removeClass('enqueued uploading').addClass('aborted');
+                },
+                progress: function (item, loaded, total) {
+                    $lis[item.id].find('.progress .bar').css('width', Math.round(loaded / total * 100) + '%');
+                },
+                success: function (item) {
+                    $lis[item.id].removeClass('uploading').addClass('success');
+                },
+                error: function (item) {
+                    $lis[item.id].removeClass('uploading').addClass('error');
+                }
+            });
+
+            function handleDragOver(evt) {
+                evt.stopPropagation();
+                evt.preventDefault();
+            }
+            function handleDrop(evt) {
+                evt.stopPropagation();
+                evt.preventDefault();
+                var files = evt.dataTransfer.files;
+                for (var i = 0; i < files.length; ++i) {
+                    uploader.add(files[i]);
+                }
+            }
+            var dropArea = document.getElementById('drop');
+            dropArea.addEventListener('dragover', handleDragOver, false);
+            dropArea.addEventListener('drop', handleDrop, false);
+        </script>
+    </body>
+</html>
